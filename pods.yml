@@ -25,6 +25,13 @@ spec:
         volumeMounts:
         - name: eventstore-data
           mountPath: /data
+        resources:
+          requests:
+            cpu: 200m
+            memory: 256Mi
+          limits:
+            cpu: 300m
+            memory: 512Mi
   volumeClaimTemplates:
   - metadata:
       name: eventstore-data
