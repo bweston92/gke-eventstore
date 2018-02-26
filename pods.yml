@@ -1,0 +1,37 @@
+---
+apiVersion: apps/v1beta2
+kind: StatefulSet
+metadata:
+  name: eventstore-server
+  namespace: eventstore
+spec:
+  serviceName: eventstore
+  replicas: 1
+  selector:
+    matchLabels:
+      role: eventstore-server
+  template:
+    metadata:
+      labels:
+        role: eventstore-server
+    spec:
+      containers:
+      - name: eventstore
+        image: eventstore/eventstore
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 2113
+          protocol: TCP
+        volumeMounts:
+        - name: eventstore-data
+          mountPath: /data
+  volumeClaimTemplates:
+  - metadata:
+      name: eventstore-data
+      annotations:
+        volume.beta.kubernetes.io/storage-class: "es-ssd"
+    spec:
+      accessModes: [ "ReadWriteOnce" ]
+      resources:
+        requests:
+          storage: 1Gi
