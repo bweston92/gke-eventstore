@@ -24,7 +24,7 @@ spec:
           protocol: TCP
         volumeMounts:
         - name: eventstore-data
-          mountPath: /data
+          mountPath: /var/lib/eventstore
         resources:
           requests:
             cpu: 200m
